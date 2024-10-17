@@ -1,4 +1,4 @@
-const { addWordToGrid } = require("../src/utils.js");
+import { addWordToGrid } from "../src/utils";
 
 const testCases = [
   {

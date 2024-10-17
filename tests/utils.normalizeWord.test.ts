@@ -1,4 +1,4 @@
-const { normalizeWord } = require("../src/utils.js");
+import { normalizeWord } from "../src/utils";
 
 const testCases = [
   {

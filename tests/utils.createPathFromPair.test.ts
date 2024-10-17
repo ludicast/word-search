@@ -1,4 +1,4 @@
-const { createPathFromPair } = require("../src/utils.js");
+import { createPathFromPair } from "../src/utils";
 
 const testCases = [
   // N

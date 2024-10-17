@@ -1,4 +1,4 @@
-const { getRandomLetter } = require("../src/utils.js");
+import { getRandomLetter } from "../src/utils.js";
 
 describe("utils.getRandomLetter", () => {
   it(`returns an uppercase letter`, () => {

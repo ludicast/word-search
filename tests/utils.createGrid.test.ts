@@ -1,4 +1,4 @@
-const { createGrid } = require("../src/utils.js");
+import { createGrid } from "../src/utils.js";
 
 const testCases = [
   {

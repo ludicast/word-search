@@ -1,4 +1,4 @@
-const { findPathInGrid } = require("../src/utils.js");
+import { findPathInGrid } from "../src/utils";
 
 const testCases = [
   {
@@ -59,7 +59,7 @@ describe("utils.findPathInGrid", () => {
         t.grid,
         t.allowedDirections,
         t.backwardsProbability
-      );
+      ) as any;
       if (t.possible) {
         expect(res.length).toEqual(t.word.length);
       } else {
