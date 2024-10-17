@@ -1,14 +1,15 @@
-const _shuffle = require("lodash/shuffle");
-const _merge = require("lodash/merge");
-const _difference = require("lodash/difference");
-const _cloneDeep = require("lodash/cloneDeep");
-const utils = require("./utils.js");
-const defaultSettings = require("./defaultsettings.js");
+import { merge, difference, cloneDeep, shuffle } from "lodash";
+import * as utils from "./utils";
+import { defaultSettings } from "./defaultsettings";
 
-class WordSearch {
+export class WordSearch {
+    settings: typeof defaultSettings
+    data: { grid: string[][], words: Array<{ word: string, clean: string, path: any }> }
+    forbiddenWordsFound: any[]
+
 	constructor(options = {}) {
-		this.settings = _merge(_cloneDeep(defaultSettings), _cloneDeep(options));
-		this.settings.allowedDirections = _difference(
+		this.settings = merge(cloneDeep(defaultSettings), cloneDeep(options));
+		this.settings.allowedDirections = difference(
 			this.settings.allowedDirections,
 			this.settings.disabledDirections
 		);
@@ -16,27 +17,27 @@ class WordSearch {
 		this.data = this.buildGame();
 	}
 	get grid() {
-		return _cloneDeep(this.data.grid);
+		return cloneDeep(this.data.grid);
 	}
 	get words() {
-		return _cloneDeep(this.data.words);
+		return cloneDeep(this.data.words);
 	}
 	get cleanForbiddenWords() {
-		return _cloneDeep(this.settings.forbiddenWords).map(w => this.cleanWord(w));
+		return cloneDeep(this.settings.forbiddenWords).map(w => this.cleanWord(w));
 	}
 	get forbiddenWordsIncluded() {
-		return _cloneDeep(this.forbiddenWordsFound);
+		return cloneDeep(this.forbiddenWordsFound);
 	}
 	get defaultSettings() {
-		return _cloneDeep(defaultSettings);
+		return cloneDeep(defaultSettings);
 	}
 	get utils() {
 		return utils;
 	}
-	buildGame(retries = 0) {
+	buildGame(retries = 0): { grid: string[][], words: Array<{ word: string, clean: string, path: any }> } {
 		let grid = utils.createGrid(this.settings.cols, this.settings.rows);
-		const addedWords = [];
-		const dict = _shuffle(this.settings.dictionary);
+		const addedWords: Array<{ word: string, clean: string, path: any }> = [];
+		const dict = shuffle(this.settings.dictionary);
 		dict.forEach(word => {
 			const clean = this.cleanWord(word);
 			if (this.cleanForbiddenWords.some(fw => clean.includes(fw))) {
@@ -74,7 +75,7 @@ class WordSearch {
 
 		return { grid, words: addedWords };
 	}
-	cleanWord(word) {
+	cleanWord(word: string) {
 		return utils.normalizeWord(
 			word,
 			this.settings.upperCase,
@@ -82,13 +83,13 @@ class WordSearch {
 		);
 	}
 	dump() {
-		return _cloneDeep({ settings: this.settings, data: this.data });
+		return cloneDeep({ settings: this.settings, data: this.data });
 	}
-	load(config) {
-		_merge(this, config);
+	load(config: typeof defaultSettings) {
+		merge(this, config);
 		return this;
 	}
-	read(start, end) {
+	read(start: utils.Position, end: utils.Position) {
 		const path = utils.createPathFromPair(start, end);
 		if (path) {
 			return path.map(pos => this.data.grid[pos.y][pos.x]).join("");
@@ -99,5 +100,3 @@ class WordSearch {
 		return this.data.grid.map(l => l.join(" ")).join("\n");
 	}
 }
-
-module.exports = WordSearch;

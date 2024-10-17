@@ -1,4 +1,4 @@
-const { getAllCharSequencesFromGrid } = require("../src/utils.js");
+import { getAllCharSequencesFromGrid } from "../src/utils.js";
 
 const testCases = [
 	{

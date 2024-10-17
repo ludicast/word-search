@@ -1,4 +1,4 @@
-const { getWordStartBoundaries } = require("../src/utils.js");
+import { getWordStartBoundaries } from "../src/utils";
 
 const testCases = [
   {

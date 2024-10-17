@@ -1,25 +1,24 @@
-const _inRange = require("lodash/inRange");
-const _range = require("lodash/range");
-const _fill = require("lodash/fill");
-const _flatten = require("lodash/flatten");
-const _random = require("lodash/random");
-const _cloneDeep = require("lodash/cloneDeep");
-const _shuffle = require("lodash/shuffle");
-const diacritics = require("diacritics");
+import { inRange, range, fill, flatten, random, cloneDeep, shuffle } from "lodash";
+import diacritics from "diacritics";
+
+export type Position = {
+	x: number;
+	y: number;
+};
 
 /**
  * Returns an array of positions, following a direction
  * from a starting point.
  * @kind function
  * @name createPath
- * @param {Integer} x - Start position x
- * @param {Integer} y - Start position y
- * @param {String} dir - Direction ("N", "S", "E", "W", "NE", "NW", "SE", "SW")
- * @param {Integer} len - Length of the word
+ * @param {number} x - Start position x
+ * @param {number} y - Start position y
+ * @param {string} dir - Direction ("N", "S", "E", "W", "NE", "NW", "SE", "SW")
+ * @param {number} len - Length of the word
  * @returns {Array} Array of positions
  */
-const createPath = (x, y, dir, len) => {
-	return _fill(Array(len - 1), 0).reduce(
+export const createPath = (x: number, y: number, dir: string, len: number): Position[] => {
+	return fill(Array(len - 1), 0).reduce(
 		path => {
 			const { x: prevX, y: prevY } = path[path.length - 1];
 			return path.concat({
@@ -36,18 +35,14 @@ const createPath = (x, y, dir, len) => {
  * Returns null if it's not going in a straight direction.
  * @kind function
  * @name createPathFromPair
- * @param {Object} start - Start position object
- * @param {Integer} start.x - Horizontal start position
- * @param {Integer} start.y - Vertical start position
- * @param {Object} end - End position object
- * @param {Integer} end.x - Horizontal end position
- * @param {Integer} end.y - Vertical end position
+ * @param {Position} start - Start position object
+ * @param {Position} end - End position object
  * @returns {(Array|null)} - Array of positions
  */
-const createPathFromPair = (start, end) => {
+export const createPathFromPair = (start: Position, end: Position): Position[] | null => {
 	const hDist = end.x - start.x;
 	const vDist = end.y - start.y;
-	const fn = (dir, len) => createPath(start.x, start.y, dir, len);
+	const fn = (dir: string, len: number) => createPath(start.x, start.y, dir, len);
 	if (hDist === vDist) {
 		if (vDist > 0) {
 			return fn("SE", vDist + 1);
@@ -82,13 +77,13 @@ const createPathFromPair = (start, end) => {
  * Returns null if the result is out of boundaries.
  * @kind function
  * @name getWordStartBoundaries
- * @param {Integer} wordLength - Length of the word
- * @param {String} direction - Direction ("N", "S", "E", "W", "NE", "NW", "SE", "SW")
- * @param {Integer} cols - Column count
- * @param {Integer} rows - Row count
+ * @param {number} wordLength - Length of the word
+ * @param {string} direction - Direction ("N", "S", "E", "W", "NE", "NW", "SE", "SW")
+ * @param {number} cols - Column count
+ * @param {number} rows - Row count
  * @returns {(Array|null)} - Array of positions
  */
-const getWordStartBoundaries = (wordLength, direction, cols, rows) => {
+export const getWordStartBoundaries = (wordLength: number, direction: string, cols: number, rows: number): { minX: number, maxX: number, minY: number, maxY: number } | null => {
 	// Full grid
 	const res = {
 		minX: 0,
@@ -127,8 +122,8 @@ const getWordStartBoundaries = (wordLength, direction, cols, rows) => {
 	// If the word is too long (out of boundaries),
 	// it's a bad input
 	if (
-		[res.minX, res.maxX].some(v => !_inRange(v, 0, cols + 1)) ||
-    [res.minY, res.maxY].some(v => !_inRange(v, 0, rows + 1))
+		[res.minX, res.maxX].some(v => !inRange(v, 0, cols + 1)) ||
+    [res.minY, res.maxY].some(v => !inRange(v, 0, rows + 1))
 	) {
 		badInput = true;
 	}
@@ -136,17 +131,18 @@ const getWordStartBoundaries = (wordLength, direction, cols, rows) => {
 	return badInput ? null : res;
 };
 
+
 /**
  * Returns a normalized string with or without any accent,
  * all uppercase or all lowercase.
  * @kind function
  * @name normalizeWord
- * @param {String} word - Word
- * @param {Boolean} upperCase - Whether to transform the string to uppercase
- * @param {Boolean} keepDiacritics - Whether to keep diacritics (accents)
- * @returns {String} - The transformed word
+ * @param {string} word - Word
+ * @param {boolean} upperCase - Whether to transform the string to uppercase
+ * @param {boolean} keepDiacritics - Whether to keep diacritics (accents)
+ * @returns {string} - The transformed word
  */
-const normalizeWord = (word, upperCase = true, keepDiacritics = false) => {
+export const normalizeWord = (word: string, upperCase = true, keepDiacritics = false): string => {
 	let res = keepDiacritics ? word : diacritics.remove(word);
 	return res[upperCase ? "toUpperCase" : "toLowerCase"]();
 };
@@ -155,28 +151,28 @@ const normalizeWord = (word, upperCase = true, keepDiacritics = false) => {
  * Returns a random letter, uppercase or lowercase.
  * @kind function
  * @name getRandomLetter
- * @param {Boolean} upperCase - Whether to return an uppercase letter
- * @returns {String} - A random letter
+ * @param {boolean} upperCase - Whether to return an uppercase letter
+ * @returns {string} - A random letter
  */
-const getRandomLetter = upperCase => {
+export const getRandomLetter = (upperCase: boolean): string => {
 	let alphabet = "abcdefghijklmnopqrstuvwxyz";
 	if (upperCase) {
 		alphabet = alphabet.toUpperCase();
 	}
-	return alphabet[_random(alphabet.length - 1)];
+	return alphabet[random(alphabet.length - 1)];
 };
 
 /**
  * Returns a new grid with a word added in the given path.
  * @kind function
  * @name addWordToGrid
- * @param {String} word - Word
+ * @param {string} word - Word
  * @param {Array} path - Array of positions
  * @param {Array} grid - Grid to add the word to
  * @returns {Array} - A new grid
  */
-const addWordToGrid = (word, path, grid) => {
-	const updatedGrid = _cloneDeep(grid);
+export const addWordToGrid = (word: string, path: Position[], grid: string[][]): string[][] => {
+	const updatedGrid = cloneDeep(grid);
 	path.forEach((pos, i) => (updatedGrid[pos.y][pos.x] = word[i]));
 	return updatedGrid;
 };
@@ -186,11 +182,11 @@ const addWordToGrid = (word, path, grid) => {
  * containing only ".".
  * @kind function
  * @name createGrid
- * @param {Integer} cols - Column count
- * @param {Integer} rows - Row count
+ * @param {number} cols - Column count
+ * @param {number} rows - Row count
  * @returns {Array} - A new grid
  */
-const createGrid = (cols, rows) => {
+export const createGrid = (cols: number, rows: number): string[][] => {
 	const grid = [];
 	for (var y = 0; y < rows; y++) {
 		const line = [];
@@ -207,33 +203,43 @@ const createGrid = (cols, rows) => {
  * @kind function
  * @name fillGrid
  * @param {Array} grid - Grid to fill
- * @param {Boolean} upperCase - Whether to fill the grid with uppercase letters
+ * @param {boolean} upperCase - Whether to fill the grid with uppercase letters
  * @returns {Array} - A new grid
  */
-const fillGrid = (grid, upperCase) => {
+export const fillGrid = (grid: string[][], upperCase: boolean): string[][] => {
 	return grid.map(row =>
 		row.map(cell => (cell === "." ? getRandomLetter(upperCase) : cell))
 	);
 };
+
+
+function shuffleDirections(allowedDirections: string[], tryBackardsFirst: boolean): string[] {
+	const backwardsDirections = shuffle(["N", "W", "NW", "SW"]);
+	const forwardDirections = shuffle(["S", "E", "NE", "SE"]);
+	const allDirections = tryBackardsFirst
+		? backwardsDirections.concat(forwardDirections)
+		: forwardDirections.concat(backwardsDirections);
+	return allDirections.filter(d => allowedDirections.includes(d));
+}
 
 /**
  * Returns a random path for a word in a grid if it can find one,
  * null otherwise.
  * @kind function
  * @name findPathInGrid
- * @param {String} word - Word
+ * @param {string} word - Word
  * @param {Array} grid - Grid
  * @param {Array} allowedDirections - Array of allowed directions ("N", "S", "E", "W", "NE", "NW", "SE", "SW")
- * @param {Boolean} backwardsProbability - Probability to have each word written backwards
- * @returns {(Array|false)} - Array of positions
+ * @param {number} backwardsProbability - Probability to have each word written backwards
+ * @returns {(Array<Position>|false)} - Array of positions
  */
-const findPathInGrid = (
-	word,
-	grid,
-	allowedDirections,
-	backwardsProbability
+export const findPathInGrid = (
+	word: string,
+	grid: string[][],
+	allowedDirections: string[],
+	backwardsProbability: number
 ) => {
-	let foundPath = false;
+	let foundPath: Position[] | false = false;
 	let path;
 	const tryBackwardsFirst = Math.random() < backwardsProbability;
 	// We'll try all possible directions in random order until we find a spot
@@ -242,7 +248,7 @@ const findPathInGrid = (
 		tryBackwardsFirst
 	);
 	while (directionsToTry.length && !foundPath) {
-		const direction = directionsToTry.shift();
+		const direction = directionsToTry.shift()!;
 		// Get the boundaries of where the word can start
 		const boundaries = getWordStartBoundaries(
 			word.length,
@@ -251,14 +257,14 @@ const findPathInGrid = (
 			grid.length
 		);
 		if (boundaries !== null) {
-			const xToTry = _range(boundaries.minX, boundaries.maxX + 1);
-			const yToTry = _range(boundaries.minY, boundaries.maxY + 1);
+			const xToTry = range(boundaries.minX, boundaries.maxX + 1);
+			const yToTry = range(boundaries.minY, boundaries.maxY + 1);
 			// We'll try all possible positions in random order until we find a spot
-			const positionsToTry = _shuffle(
-				_flatten(xToTry.map(x => yToTry.map(y => ({ x, y }))))
+			const positionsToTry = shuffle(
+				flatten(xToTry.map(x => yToTry.map(y => ({ x, y }))))
 			);
 			while (positionsToTry.length && !foundPath) {
-				const { x, y } = positionsToTry.shift();
+				const { x, y } = positionsToTry.shift()!;
 				let invalidSpot = false;
 				path = createPath(x, y, direction, word.length);
 				let i = 0;
@@ -285,10 +291,25 @@ const findPathInGrid = (
  * @param {Array} words - Array of normalized words
  * @param {Array} grid - Grid
  */
-function filterWordsInGrid(words, grid) {
+export function filterWordsInGrid(words: string[], grid: string[][]): string[] {
 	const forwardSequences = getAllCharSequencesFromGrid(grid);
 	const sequences = forwardSequences + "|" + forwardSequences.split("").reverse();
 	return words.filter(w => sequences.includes(w));
+}
+
+/**
+ * Returns a string obtained by reading len characters
+ * from a starting point following a direction.
+ * @param {number} x - Start position x
+ * @param {number} y - Start position y
+ * @param {string} direction - Direction ("N", "S", "E", "W", "NE", "NW", "SE", "SW")
+ * @param {number} len - Length of the string to read
+ * @param {Array} grid - Grid
+ * @returns {string}
+ */
+function readPathFromGrid(x: number, y: number, direction: string, len: number, grid: string[][]): string {
+	const path = createPath(x, y, direction, len);
+	return path.map(pos => grid[pos.y][pos.x]).join("");
 }
 
 /**
@@ -296,9 +317,9 @@ function filterWordsInGrid(words, grid) {
  * character sequences found in the grid,
  * in all forward directions (E, S, NE, SE).
  * @param {Array} grid - Grid 
- * @return {String}
+ * @return {string}
  */
-function getAllCharSequencesFromGrid(grid) {
+export function getAllCharSequencesFromGrid(grid: string[][]): string {
 	const sequences = [];
 
 	for (let y = 0; y < grid.length; y++) {
@@ -325,41 +346,3 @@ function getAllCharSequencesFromGrid(grid) {
 	}
 	return sequences.filter(x => x.length > 1).join("|");
 }
-
-/**
- * Returns a string obtained by reading len characters
- * from a starting point following a direction.
- * @param {Integer} x - Start position x
- * @param {Integer} y - Start position y
- * @param {String} direction - Direction ("N", "S", "E", "W", "NE", "NW", "SE", "SW")
- * @param {Integer} len - Length of the string to read
- * @param {Array} grid - Grid
- * @returns {String}
- */
-function readPathFromGrid(x, y, direction, len, grid) {
-	const path = createPath(x, y, direction, len);
-	return path.map(pos => grid[pos.y][pos.x]).join("");
-}
-
-function shuffleDirections(allowedDirections, tryBackardsFirst) {
-	const backwardsDirections = _shuffle(["N", "W", "NW", "SW"]);
-	const forwardDirections = _shuffle(["S", "E", "NE", "SE"]);
-	const allDirections = tryBackardsFirst
-		? backwardsDirections.concat(forwardDirections)
-		: forwardDirections.concat(backwardsDirections);
-	return allDirections.filter(d => allowedDirections.includes(d));
-}
-
-module.exports = {
-	getWordStartBoundaries,
-	createPath,
-	createPathFromPair,
-	normalizeWord,
-	getRandomLetter,
-	addWordToGrid,
-	createGrid,
-	fillGrid,
-	findPathInGrid,
-	filterWordsInGrid,
-	getAllCharSequencesFromGrid,
-};

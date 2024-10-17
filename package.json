@@ -2,12 +2,15 @@
   "name": "@blex41/word-search",
   "version": "1.2.0",
   "description": "Word search puzzle generator",
-  "main": "dist/wordsearch.node.js",
+  "module": "src/index.ts",
+  "main": "out/index.js",
   "files": [
-    "dist/**/*"
+    "out/**/*",
+    "types/**/*"
   ],
+  "types": "types/index.d.ts",
   "scripts": {
-    "build": "webpack --mode=production",
+    "build": "bun build src/index.ts --outdir=out --target=node",
     "build:doc": "jsdoc ./src -d docs",
     "test": "jest --verbose --coverage",
     "lint": "eslint --ext .js --max-warnings=0 ./src",
@@ -34,33 +37,17 @@
     "url": "https://github.com/blex41/word-search/issues"
   },
   "homepage": "https://github.com/blex41/word-search#readme",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/diacritics": "^1.3.3",
+    "@types/lodash": "^4.17.10"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
   "dependencies": {
+    "@types/jest": "^29.5.13",
     "diacritics": "^1.3.0",
     "lodash": "^4.17.21"
-  },
-  "jest": {
-    "coverageReporters": [
-      "json-summary",
-      "text",
-      "lcov"
-    ]
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.2.0",
-    "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "@semantic-release/changelog": "^3.0.2",
-    "@semantic-release/git": "^7.0.7",
-    "@semantic-release/npm": "^5.1.3",
-    "babel-loader": "^8.0.4",
-    "coveralls": "^3.0.2",
-    "eslint": "^5.12.0",
-    "eslint-loader": "^2.1.1",
-    "eslint-plugin-jest": "^24.3.6",
-    "jest": "^23.6.0",
-    "jsdoc": "^3.6.7",
-    "semantic-release": "^17.2.3",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
   }
 }

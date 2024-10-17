@@ -1,4 +1,4 @@
-const { fillGrid } = require("../src/utils.js");
+import { fillGrid } from "../src/utils.js";
 
 const testCases = [
   {

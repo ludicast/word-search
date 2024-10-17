@@ -1,4 +1,4 @@
-const { createPath } = require("../src/utils.js");
+import { createPath } from "../src/utils";
 
 const testCases = [
   {

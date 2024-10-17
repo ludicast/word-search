@@ -1,5 +1,5 @@
-const WordSearch = require("../src/index.js");
-const { getAllCharSequencesFromGrid } = require("../src/utils.js");
+import { WordSearch } from "../src";
+import { getAllCharSequencesFromGrid } from "../src/utils";
 
 describe("WordSearch", () => {
 	const ws1 = new WordSearch();
@@ -13,7 +13,7 @@ describe("WordSearch", () => {
 		upperCase: true,
 		diacritics: false
 	});
-	const options5 = {
+	const options5: any = {
 		settings: {
 			cols: 10,
 			rows: 10,
