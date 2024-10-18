@@ -1,5 +1,6 @@
-import { inRange, range, fill, flatten, random, cloneDeep, shuffle } from "lodash";
+import { inRange, range, fill, flatten, cloneDeep } from "lodash";
 import diacritics from "diacritics";
+import { seededShuffle, seededRandom, type Seeder } from "./random";
 
 export type Position = {
 	x: number;
@@ -154,7 +155,7 @@ export const normalizeWord = (word: string, upperCase = true, keepDiacritics = f
  * @param {boolean} upperCase - Whether to return an uppercase letter
  * @returns {string} - A random letter
  */
-export const getRandomLetter = (upperCase: boolean): string => {
+export const getRandomLetter = (upperCase: boolean, random: Seeder = seededRandom()): string => {
 	let alphabet = "abcdefghijklmnopqrstuvwxyz";
 	if (upperCase) {
 		alphabet = alphabet.toUpperCase();
@@ -206,16 +207,15 @@ export const createGrid = (cols: number, rows: number): string[][] => {
  * @param {boolean} upperCase - Whether to fill the grid with uppercase letters
  * @returns {Array} - A new grid
  */
-export const fillGrid = (grid: string[][], upperCase: boolean): string[][] => {
+export const fillGrid = (grid: string[][], upperCase: boolean, seeder: Seeder = seededRandom()): string[][] => {
 	return grid.map(row =>
-		row.map(cell => (cell === "." ? getRandomLetter(upperCase) : cell))
+		row.map(cell => (cell === "." ? getRandomLetter(upperCase, seeder) : cell))
 	);
 };
 
-
-function shuffleDirections(allowedDirections: string[], tryBackardsFirst: boolean): string[] {
-	const backwardsDirections = shuffle(["N", "W", "NW", "SW"]);
-	const forwardDirections = shuffle(["S", "E", "NE", "SE"]);
+function shuffleDirections(allowedDirections: string[], tryBackardsFirst: boolean, seeder: Seeder = seededRandom()): string[] {
+	const backwardsDirections = seededShuffle(["N", "W", "NW", "SW"], seeder);
+	const forwardDirections = seededShuffle(["S", "E", "NE", "SE"], seeder);
 	const allDirections = tryBackardsFirst
 		? backwardsDirections.concat(forwardDirections)
 		: forwardDirections.concat(backwardsDirections);
@@ -237,7 +237,8 @@ export const findPathInGrid = (
 	word: string,
 	grid: string[][],
 	allowedDirections: string[],
-	backwardsProbability: number
+	backwardsProbability: number,
+	seeder: Seeder = seededRandom()
 ) => {
 	let foundPath: Position[] | false = false;
 	let path;
@@ -245,7 +246,8 @@ export const findPathInGrid = (
 	// We'll try all possible directions in random order until we find a spot
 	const directionsToTry = shuffleDirections(
 		allowedDirections,
-		tryBackwardsFirst
+		tryBackwardsFirst,
+		seeder
 	);
 	while (directionsToTry.length && !foundPath) {
 		const direction = directionsToTry.shift()!;
@@ -260,8 +262,8 @@ export const findPathInGrid = (
 			const xToTry = range(boundaries.minX, boundaries.maxX + 1);
 			const yToTry = range(boundaries.minY, boundaries.maxY + 1);
 			// We'll try all possible positions in random order until we find a spot
-			const positionsToTry = shuffle(
-				flatten(xToTry.map(x => yToTry.map(y => ({ x, y }))))
+			const positionsToTry = seededShuffle(
+				flatten(xToTry.map(x => yToTry.map(y => ({ x, y })))), seeder
 			);
 			while (positionsToTry.length && !foundPath) {
 				const { x, y } = positionsToTry.shift()!;

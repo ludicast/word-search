@@ -1,3 +1,4 @@
+import { createRequire } from "node:module";
 var __create = Object.create;
 var __getProtoOf = Object.getPrototypeOf;
 var __defProp = Object.defineProperty;
@@ -24,6 +25,7 @@ var __export = (target, all) => {
       set: (newValue) => all[name] = () => newValue
     });
 };
+var __require = /* @__PURE__ */ createRequire(import.meta.url);
 
 // node_modules/lodash/lodash.js
 var require_lodash = __commonJS((exports, module) => {
@@ -713,7 +715,7 @@ var require_lodash = __commonJS((exports, module) => {
     }
     var runInContext = function runInContext(context) {
       context = context == null ? root : _.defaults(root.Object(), context, _.pick(root, contextProps));
-      var { Array: Array2, Date, Error: Error2, Function: Function2, Math: Math2, Object: Object2, RegExp: RegExp2, String, TypeError: TypeError2 } = context;
+      var { Array: Array2, Date: Date2, Error: Error2, Function: Function2, Math: Math2, Object: Object2, RegExp: RegExp2, String: String2, TypeError: TypeError2 } = context;
       var arrayProto = Array2.prototype, funcProto = Function2.prototype, objectProto = Object2.prototype;
       var coreJsData = context["__core-js_shared__"];
       var funcToString = funcProto.toString;
@@ -727,7 +729,7 @@ var require_lodash = __commonJS((exports, module) => {
       var objectCtorString = funcToString.call(Object2);
       var oldDash = root._;
       var reIsNative = RegExp2("^" + funcToString.call(hasOwnProperty).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$");
-      var Buffer = moduleExports ? context.Buffer : undefined2, Symbol2 = context.Symbol, Uint8Array = context.Uint8Array, allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined2, getPrototype = overArg(Object2.getPrototypeOf, Object2), objectCreate = Object2.create, propertyIsEnumerable = objectProto.propertyIsEnumerable, splice = arrayProto.splice, spreadableSymbol = Symbol2 ? Symbol2.isConcatSpreadable : undefined2, symIterator = Symbol2 ? Symbol2.iterator : undefined2, symToStringTag = Symbol2 ? Symbol2.toStringTag : undefined2;
+      var Buffer = moduleExports ? context.Buffer : undefined2, Symbol2 = context.Symbol, Uint8Array2 = context.Uint8Array, allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined2, getPrototype = overArg(Object2.getPrototypeOf, Object2), objectCreate = Object2.create, propertyIsEnumerable = objectProto.propertyIsEnumerable, splice = arrayProto.splice, spreadableSymbol = Symbol2 ? Symbol2.isConcatSpreadable : undefined2, symIterator = Symbol2 ? Symbol2.iterator : undefined2, symToStringTag = Symbol2 ? Symbol2.toStringTag : undefined2;
       var defineProperty = function() {
         try {
           var func = getNative(Object2, "defineProperty");
@@ -736,8 +738,8 @@ var require_lodash = __commonJS((exports, module) => {
         } catch (e) {
         }
       }();
-      var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout, ctxNow = Date && Date.now !== root.Date.now && Date.now, ctxSetTimeout = context.setTimeout !== root.setTimeout && context.setTimeout;
-      var { ceil: nativeCeil, floor: nativeFloor } = Math2, nativeGetSymbols = Object2.getOwnPropertySymbols, nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined2, nativeIsFinite = context.isFinite, nativeJoin = arrayProto.join, nativeKeys = overArg(Object2.keys, Object2), nativeMax = Math2.max, nativeMin = Math2.min, nativeNow = Date.now, nativeParseInt = context.parseInt, nativeRandom = Math2.random, nativeReverse = arrayProto.reverse;
+      var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout, ctxNow = Date2 && Date2.now !== root.Date.now && Date2.now, ctxSetTimeout = context.setTimeout !== root.setTimeout && context.setTimeout;
+      var { ceil: nativeCeil, floor: nativeFloor } = Math2, nativeGetSymbols = Object2.getOwnPropertySymbols, nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined2, nativeIsFinite = context.isFinite, nativeJoin = arrayProto.join, nativeKeys = overArg(Object2.keys, Object2), nativeMax = Math2.max, nativeMin = Math2.min, nativeNow = Date2.now, nativeParseInt = context.parseInt, nativeRandom = Math2.random, nativeReverse = arrayProto.reverse;
       var DataView = getNative(context, "DataView"), Map = getNative(context, "Map"), Promise2 = getNative(context, "Promise"), Set = getNative(context, "Set"), WeakMap2 = getNative(context, "WeakMap"), nativeCreate = getNative(Object2, "create");
       var metaMap = WeakMap2 && new WeakMap2;
       var realNames = {};
@@ -1032,7 +1034,7 @@ var require_lodash = __commonJS((exports, module) => {
       Stack.prototype.has = stackHas;
       Stack.prototype.set = stackSet;
       function arrayLikeKeys(value, inherited) {
-        var isArr = isArray(value), isArg = !isArr && isArguments(value), isBuff = !isArr && !isArg && isBuffer(value), isType = !isArr && !isArg && !isBuff && isTypedArray(value), skipIndexes = isArr || isArg || isBuff || isType, result2 = skipIndexes ? baseTimes(value.length, String) : [], length = result2.length;
+        var isArr = isArray(value), isArg = !isArr && isArguments(value), isBuff = !isArr && !isArg && isBuffer(value), isType = !isArr && !isArg && !isBuff && isTypedArray(value), skipIndexes = isArr || isArg || isBuff || isType, result2 = skipIndexes ? baseTimes(value.length, String2) : [], length = result2.length;
         for (var key in value) {
           if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == "length" || isBuff && (key == "offset" || key == "parent") || isType && (key == "buffer" || key == "byteLength" || key == "byteOffset") || isIndex(key, length)))) {
             result2.push(key);
@@ -1989,7 +1991,7 @@ var require_lodash = __commonJS((exports, module) => {
       }
       function cloneArrayBuffer(arrayBuffer) {
         var result2 = new arrayBuffer.constructor(arrayBuffer.byteLength);
-        new Uint8Array(result2).set(new Uint8Array(arrayBuffer));
+        new Uint8Array2(result2).set(new Uint8Array2(arrayBuffer));
         return result2;
       }
       function cloneDataView(dataView, isDeep) {
@@ -2571,7 +2573,7 @@ var require_lodash = __commonJS((exports, module) => {
             object = object.buffer;
             other = other.buffer;
           case arrayBufferTag:
-            if (object.byteLength != other.byteLength || !equalFunc(new Uint8Array(object), new Uint8Array(other))) {
+            if (object.byteLength != other.byteLength || !equalFunc(new Uint8Array2(object), new Uint8Array2(other))) {
               return false;
             }
             return true;
@@ -5850,6 +5852,640 @@ var require_diacritics = __commonJS((exports) => {
   exports.diacriticsMap = diacriticsMap;
 });
 
+// node_modules/seedrandom/lib/alea.js
+var require_alea = __commonJS((exports, module) => {
+  (function(global2, module2, define2) {
+    function Alea(seed) {
+      var me = this, mash = Mash();
+      me.next = function() {
+        var t = 2091639 * me.s0 + me.c * 0.00000000023283064365386963;
+        me.s0 = me.s1;
+        me.s1 = me.s2;
+        return me.s2 = t - (me.c = t | 0);
+      };
+      me.c = 1;
+      me.s0 = mash(" ");
+      me.s1 = mash(" ");
+      me.s2 = mash(" ");
+      me.s0 -= mash(seed);
+      if (me.s0 < 0) {
+        me.s0 += 1;
+      }
+      me.s1 -= mash(seed);
+      if (me.s1 < 0) {
+        me.s1 += 1;
+      }
+      me.s2 -= mash(seed);
+      if (me.s2 < 0) {
+        me.s2 += 1;
+      }
+      mash = null;
+    }
+    function copy(f, t) {
+      t.c = f.c;
+      t.s0 = f.s0;
+      t.s1 = f.s1;
+      t.s2 = f.s2;
+      return t;
+    }
+    function impl(seed, opts) {
+      var xg = new Alea(seed), state = opts && opts.state, prng = xg.next;
+      prng.int32 = function() {
+        return xg.next() * 4294967296 | 0;
+      };
+      prng.double = function() {
+        return prng() + (prng() * 2097152 | 0) * 0.00000000000000011102230246251565;
+      };
+      prng.quick = prng;
+      if (state) {
+        if (typeof state == "object")
+          copy(state, xg);
+        prng.state = function() {
+          return copy(xg, {});
+        };
+      }
+      return prng;
+    }
+    function Mash() {
+      var n = 4022871197;
+      var mash = function(data) {
+        data = String(data);
+        for (var i = 0;i < data.length; i++) {
+          n += data.charCodeAt(i);
+          var h = 0.02519603282416938 * n;
+          n = h >>> 0;
+          h -= n;
+          h *= n;
+          n = h >>> 0;
+          h -= n;
+          n += h * 4294967296;
+        }
+        return (n >>> 0) * 0.00000000023283064365386963;
+      };
+      return mash;
+    }
+    if (module2 && module2.exports) {
+      module2.exports = impl;
+    } else if (define2 && define2.amd) {
+      define2(function() {
+        return impl;
+      });
+    } else {
+      this.alea = impl;
+    }
+  })(exports, typeof module == "object" && module, typeof define == "function" && define);
+});
+
+// node_modules/seedrandom/lib/xor128.js
+var require_xor128 = __commonJS((exports, module) => {
+  (function(global2, module2, define2) {
+    function XorGen(seed) {
+      var me = this, strseed = "";
+      me.x = 0;
+      me.y = 0;
+      me.z = 0;
+      me.w = 0;
+      me.next = function() {
+        var t = me.x ^ me.x << 11;
+        me.x = me.y;
+        me.y = me.z;
+        me.z = me.w;
+        return me.w ^= me.w >>> 19 ^ t ^ t >>> 8;
+      };
+      if (seed === (seed | 0)) {
+        me.x = seed;
+      } else {
+        strseed += seed;
+      }
+      for (var k = 0;k < strseed.length + 64; k++) {
+        me.x ^= strseed.charCodeAt(k) | 0;
+        me.next();
+      }
+    }
+    function copy(f, t) {
+      t.x = f.x;
+      t.y = f.y;
+      t.z = f.z;
+      t.w = f.w;
+      return t;
+    }
+    function impl(seed, opts) {
+      var xg = new XorGen(seed), state = opts && opts.state, prng = function() {
+        return (xg.next() >>> 0) / 4294967296;
+      };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11, bot = (xg.next() >>> 0) / 4294967296, result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (typeof state == "object")
+          copy(state, xg);
+        prng.state = function() {
+          return copy(xg, {});
+        };
+      }
+      return prng;
+    }
+    if (module2 && module2.exports) {
+      module2.exports = impl;
+    } else if (define2 && define2.amd) {
+      define2(function() {
+        return impl;
+      });
+    } else {
+      this.xor128 = impl;
+    }
+  })(exports, typeof module == "object" && module, typeof define == "function" && define);
+});
+
+// node_modules/seedrandom/lib/xorwow.js
+var require_xorwow = __commonJS((exports, module) => {
+  (function(global2, module2, define2) {
+    function XorGen(seed) {
+      var me = this, strseed = "";
+      me.next = function() {
+        var t = me.x ^ me.x >>> 2;
+        me.x = me.y;
+        me.y = me.z;
+        me.z = me.w;
+        me.w = me.v;
+        return (me.d = me.d + 362437 | 0) + (me.v = me.v ^ me.v << 4 ^ (t ^ t << 1)) | 0;
+      };
+      me.x = 0;
+      me.y = 0;
+      me.z = 0;
+      me.w = 0;
+      me.v = 0;
+      if (seed === (seed | 0)) {
+        me.x = seed;
+      } else {
+        strseed += seed;
+      }
+      for (var k = 0;k < strseed.length + 64; k++) {
+        me.x ^= strseed.charCodeAt(k) | 0;
+        if (k == strseed.length) {
+          me.d = me.x << 10 ^ me.x >>> 4;
+        }
+        me.next();
+      }
+    }
+    function copy(f, t) {
+      t.x = f.x;
+      t.y = f.y;
+      t.z = f.z;
+      t.w = f.w;
+      t.v = f.v;
+      t.d = f.d;
+      return t;
+    }
+    function impl(seed, opts) {
+      var xg = new XorGen(seed), state = opts && opts.state, prng = function() {
+        return (xg.next() >>> 0) / 4294967296;
+      };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11, bot = (xg.next() >>> 0) / 4294967296, result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (typeof state == "object")
+          copy(state, xg);
+        prng.state = function() {
+          return copy(xg, {});
+        };
+      }
+      return prng;
+    }
+    if (module2 && module2.exports) {
+      module2.exports = impl;
+    } else if (define2 && define2.amd) {
+      define2(function() {
+        return impl;
+      });
+    } else {
+      this.xorwow = impl;
+    }
+  })(exports, typeof module == "object" && module, typeof define == "function" && define);
+});
+
+// node_modules/seedrandom/lib/xorshift7.js
+var require_xorshift7 = __commonJS((exports, module) => {
+  (function(global2, module2, define2) {
+    function XorGen(seed) {
+      var me = this;
+      me.next = function() {
+        var { x: X, i } = me, t, v, w;
+        t = X[i];
+        t ^= t >>> 7;
+        v = t ^ t << 24;
+        t = X[i + 1 & 7];
+        v ^= t ^ t >>> 10;
+        t = X[i + 3 & 7];
+        v ^= t ^ t >>> 3;
+        t = X[i + 4 & 7];
+        v ^= t ^ t << 7;
+        t = X[i + 7 & 7];
+        t = t ^ t << 13;
+        v ^= t ^ t << 9;
+        X[i] = v;
+        me.i = i + 1 & 7;
+        return v;
+      };
+      function init(me2, seed2) {
+        var j, w, X = [];
+        if (seed2 === (seed2 | 0)) {
+          w = X[0] = seed2;
+        } else {
+          seed2 = "" + seed2;
+          for (j = 0;j < seed2.length; ++j) {
+            X[j & 7] = X[j & 7] << 15 ^ seed2.charCodeAt(j) + X[j + 1 & 7] << 13;
+          }
+        }
+        while (X.length < 8)
+          X.push(0);
+        for (j = 0;j < 8 && X[j] === 0; ++j)
+          ;
+        if (j == 8)
+          w = X[7] = -1;
+        else
+          w = X[j];
+        me2.x = X;
+        me2.i = 0;
+        for (j = 256;j > 0; --j) {
+          me2.next();
+        }
+      }
+      init(me, seed);
+    }
+    function copy(f, t) {
+      t.x = f.x.slice();
+      t.i = f.i;
+      return t;
+    }
+    function impl(seed, opts) {
+      if (seed == null)
+        seed = +new Date;
+      var xg = new XorGen(seed), state = opts && opts.state, prng = function() {
+        return (xg.next() >>> 0) / 4294967296;
+      };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11, bot = (xg.next() >>> 0) / 4294967296, result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (state.x)
+          copy(state, xg);
+        prng.state = function() {
+          return copy(xg, {});
+        };
+      }
+      return prng;
+    }
+    if (module2 && module2.exports) {
+      module2.exports = impl;
+    } else if (define2 && define2.amd) {
+      define2(function() {
+        return impl;
+      });
+    } else {
+      this.xorshift7 = impl;
+    }
+  })(exports, typeof module == "object" && module, typeof define == "function" && define);
+});
+
+// node_modules/seedrandom/lib/xor4096.js
+var require_xor4096 = __commonJS((exports, module) => {
+  (function(global2, module2, define2) {
+    function XorGen(seed) {
+      var me = this;
+      me.next = function() {
+        var { w, X, i } = me, t, v;
+        me.w = w = w + 1640531527 | 0;
+        v = X[i + 34 & 127];
+        t = X[i = i + 1 & 127];
+        v ^= v << 13;
+        t ^= t << 17;
+        v ^= v >>> 15;
+        t ^= t >>> 12;
+        v = X[i] = v ^ t;
+        me.i = i;
+        return v + (w ^ w >>> 16) | 0;
+      };
+      function init(me2, seed2) {
+        var t, v, i, j, w, X = [], limit = 128;
+        if (seed2 === (seed2 | 0)) {
+          v = seed2;
+          seed2 = null;
+        } else {
+          seed2 = seed2 + "\0";
+          v = 0;
+          limit = Math.max(limit, seed2.length);
+        }
+        for (i = 0, j = -32;j < limit; ++j) {
+          if (seed2)
+            v ^= seed2.charCodeAt((j + 32) % seed2.length);
+          if (j === 0)
+            w = v;
+          v ^= v << 10;
+          v ^= v >>> 15;
+          v ^= v << 4;
+          v ^= v >>> 13;
+          if (j >= 0) {
+            w = w + 1640531527 | 0;
+            t = X[j & 127] ^= v + w;
+            i = t == 0 ? i + 1 : 0;
+          }
+        }
+        if (i >= 128) {
+          X[(seed2 && seed2.length || 0) & 127] = -1;
+        }
+        i = 127;
+        for (j = 4 * 128;j > 0; --j) {
+          v = X[i + 34 & 127];
+          t = X[i = i + 1 & 127];
+          v ^= v << 13;
+          t ^= t << 17;
+          v ^= v >>> 15;
+          t ^= t >>> 12;
+          X[i] = v ^ t;
+        }
+        me2.w = w;
+        me2.X = X;
+        me2.i = i;
+      }
+      init(me, seed);
+    }
+    function copy(f, t) {
+      t.i = f.i;
+      t.w = f.w;
+      t.X = f.X.slice();
+      return t;
+    }
+    function impl(seed, opts) {
+      if (seed == null)
+        seed = +new Date;
+      var xg = new XorGen(seed), state = opts && opts.state, prng = function() {
+        return (xg.next() >>> 0) / 4294967296;
+      };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11, bot = (xg.next() >>> 0) / 4294967296, result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (state.X)
+          copy(state, xg);
+        prng.state = function() {
+          return copy(xg, {});
+        };
+      }
+      return prng;
+    }
+    if (module2 && module2.exports) {
+      module2.exports = impl;
+    } else if (define2 && define2.amd) {
+      define2(function() {
+        return impl;
+      });
+    } else {
+      this.xor4096 = impl;
+    }
+  })(exports, typeof module == "object" && module, typeof define == "function" && define);
+});
+
+// node_modules/seedrandom/lib/tychei.js
+var require_tychei = __commonJS((exports, module) => {
+  (function(global2, module2, define2) {
+    function XorGen(seed) {
+      var me = this, strseed = "";
+      me.next = function() {
+        var { b, c, d, a } = me;
+        b = b << 25 ^ b >>> 7 ^ c;
+        c = c - d | 0;
+        d = d << 24 ^ d >>> 8 ^ a;
+        a = a - b | 0;
+        me.b = b = b << 20 ^ b >>> 12 ^ c;
+        me.c = c = c - d | 0;
+        me.d = d << 16 ^ c >>> 16 ^ a;
+        return me.a = a - b | 0;
+      };
+      me.a = 0;
+      me.b = 0;
+      me.c = 2654435769 | 0;
+      me.d = 1367130551;
+      if (seed === Math.floor(seed)) {
+        me.a = seed / 4294967296 | 0;
+        me.b = seed | 0;
+      } else {
+        strseed += seed;
+      }
+      for (var k = 0;k < strseed.length + 20; k++) {
+        me.b ^= strseed.charCodeAt(k) | 0;
+        me.next();
+      }
+    }
+    function copy(f, t) {
+      t.a = f.a;
+      t.b = f.b;
+      t.c = f.c;
+      t.d = f.d;
+      return t;
+    }
+    function impl(seed, opts) {
+      var xg = new XorGen(seed), state = opts && opts.state, prng = function() {
+        return (xg.next() >>> 0) / 4294967296;
+      };
+      prng.double = function() {
+        do {
+          var top = xg.next() >>> 11, bot = (xg.next() >>> 0) / 4294967296, result = (top + bot) / (1 << 21);
+        } while (result === 0);
+        return result;
+      };
+      prng.int32 = xg.next;
+      prng.quick = prng;
+      if (state) {
+        if (typeof state == "object")
+          copy(state, xg);
+        prng.state = function() {
+          return copy(xg, {});
+        };
+      }
+      return prng;
+    }
+    if (module2 && module2.exports) {
+      module2.exports = impl;
+    } else if (define2 && define2.amd) {
+      define2(function() {
+        return impl;
+      });
+    } else {
+      this.tychei = impl;
+    }
+  })(exports, typeof module == "object" && module, typeof define == "function" && define);
+});
+
+// node_modules/seedrandom/seedrandom.js
+var require_seedrandom = __commonJS((exports, module) => {
+  (function(global2, pool, math) {
+    var width = 256, chunks = 6, digits = 52, rngname = "random", startdenom = math.pow(width, chunks), significance = math.pow(2, digits), overflow = significance * 2, mask = width - 1, nodecrypto;
+    function seedrandom(seed, options, callback) {
+      var key = [];
+      options = options == true ? { entropy: true } : options || {};
+      var shortseed = mixkey(flatten(options.entropy ? [seed, tostring(pool)] : seed == null ? autoseed() : seed, 3), key);
+      var arc4 = new ARC4(key);
+      var prng = function() {
+        var n = arc4.g(chunks), d = startdenom, x = 0;
+        while (n < significance) {
+          n = (n + x) * width;
+          d *= width;
+          x = arc4.g(1);
+        }
+        while (n >= overflow) {
+          n /= 2;
+          d /= 2;
+          x >>>= 1;
+        }
+        return (n + x) / d;
+      };
+      prng.int32 = function() {
+        return arc4.g(4) | 0;
+      };
+      prng.quick = function() {
+        return arc4.g(4) / 4294967296;
+      };
+      prng.double = prng;
+      mixkey(tostring(arc4.S), pool);
+      return (options.pass || callback || function(prng2, seed2, is_math_call, state) {
+        if (state) {
+          if (state.S) {
+            copy(state, arc4);
+          }
+          prng2.state = function() {
+            return copy(arc4, {});
+          };
+        }
+        if (is_math_call) {
+          math[rngname] = prng2;
+          return seed2;
+        } else
+          return prng2;
+      })(prng, shortseed, "global" in options ? options.global : this == math, options.state);
+    }
+    function ARC4(key) {
+      var t, keylen = key.length, me = this, i = 0, j = me.i = me.j = 0, s = me.S = [];
+      if (!keylen) {
+        key = [keylen++];
+      }
+      while (i < width) {
+        s[i] = i++;
+      }
+      for (i = 0;i < width; i++) {
+        s[i] = s[j = mask & j + key[i % keylen] + (t = s[i])];
+        s[j] = t;
+      }
+      (me.g = function(count) {
+        var t2, r = 0, i2 = me.i, j2 = me.j, s2 = me.S;
+        while (count--) {
+          t2 = s2[i2 = mask & i2 + 1];
+          r = r * width + s2[mask & (s2[i2] = s2[j2 = mask & j2 + t2]) + (s2[j2] = t2)];
+        }
+        me.i = i2;
+        me.j = j2;
+        return r;
+      })(width);
+    }
+    function copy(f, t) {
+      t.i = f.i;
+      t.j = f.j;
+      t.S = f.S.slice();
+      return t;
+    }
+    function flatten(obj, depth) {
+      var result = [], typ = typeof obj, prop;
+      if (depth && typ == "object") {
+        for (prop in obj) {
+          try {
+            result.push(flatten(obj[prop], depth - 1));
+          } catch (e) {
+          }
+        }
+      }
+      return result.length ? result : typ == "string" ? obj : obj + "\0";
+    }
+    function mixkey(seed, key) {
+      var stringseed = seed + "", smear, j = 0;
+      while (j < stringseed.length) {
+        key[mask & j] = mask & (smear ^= key[mask & j] * 19) + stringseed.charCodeAt(j++);
+      }
+      return tostring(key);
+    }
+    function autoseed() {
+      try {
+        var out;
+        if (nodecrypto && (out = nodecrypto.randomBytes)) {
+          out = out(width);
+        } else {
+          out = new Uint8Array(width);
+          (global2.crypto || global2.msCrypto).getRandomValues(out);
+        }
+        return tostring(out);
+      } catch (e) {
+        var browser = global2.navigator, plugins = browser && browser.plugins;
+        return [+new Date, global2, plugins, global2.screen, tostring(pool)];
+      }
+    }
+    function tostring(a) {
+      return String.fromCharCode.apply(0, a);
+    }
+    mixkey(math.random(), pool);
+    if (typeof module == "object" && module.exports) {
+      module.exports = seedrandom;
+      try {
+        nodecrypto = __require("crypto");
+      } catch (ex) {
+      }
+    } else if (typeof define == "function" && define.amd) {
+      define(function() {
+        return seedrandom;
+      });
+    } else {
+      math["seed" + rngname] = seedrandom;
+    }
+  })(typeof self !== "undefined" ? self : exports, [], Math);
+});
+
+// node_modules/seedrandom/index.js
+var require_seedrandom2 = __commonJS((exports, module) => {
+  var alea = require_alea();
+  var xor128 = require_xor128();
+  var xorwow = require_xorwow();
+  var xorshift7 = require_xorshift7();
+  var xor4096 = require_xor4096();
+  var tychei = require_tychei();
+  var sr = require_seedrandom();
+  sr.alea = alea;
+  sr.xor128 = xor128;
+  sr.xorwow = xorwow;
+  sr.xorshift7 = xorshift7;
+  sr.xor4096 = xor4096;
+  sr.tychei = tychei;
+  module.exports = sr;
+});
+
 // src/index.ts
 var import_lodash2 = __toESM(require_lodash(), 1);
 
@@ -5870,9 +6506,32 @@ __export(exports_utils, {
 });
 var import_lodash = __toESM(require_lodash(), 1);
 var import_diacritics = __toESM(require_diacritics(), 1);
-function shuffleDirections(allowedDirections, tryBackardsFirst) {
-  const backwardsDirections = import_lodash.shuffle(["N", "W", "NW", "SW"]);
-  const forwardDirections = import_lodash.shuffle(["S", "E", "NE", "SE"]);
+
+// src/random.ts
+var import_seedrandom = __toESM(require_seedrandom2(), 1);
+function seededRandom(seed) {
+  const genRandom = import_seedrandom.default(seed);
+  return (max) => {
+    if (max) {
+      const res = Math.floor(genRandom() * (max + 1));
+      return Math.min(res, max);
+    }
+    return genRandom();
+  };
+}
+function seededShuffle(array, random2 = seededRandom()) {
+  const result = array.slice();
+  for (let i = result.length - 1;i > 0; i--) {
+    const j = Math.floor(random2() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+// src/utils.ts
+function shuffleDirections(allowedDirections, tryBackardsFirst, seeder = seededRandom()) {
+  const backwardsDirections = seededShuffle(["N", "W", "NW", "SW"], seeder);
+  const forwardDirections = seededShuffle(["S", "E", "NE", "SE"], seeder);
   const allDirections = tryBackardsFirst ? backwardsDirections.concat(forwardDirections) : forwardDirections.concat(backwardsDirections);
   return allDirections.filter((d) => allowedDirections.includes(d));
 }
@@ -5976,12 +6635,12 @@ var normalizeWord = (word, upperCase = true, keepDiacritics = false) => {
   let res = keepDiacritics ? word : import_diacritics.default.remove(word);
   return res[upperCase ? "toUpperCase" : "toLowerCase"]();
 };
-var getRandomLetter = (upperCase) => {
+var getRandomLetter = (upperCase, random2 = seededRandom()) => {
   let alphabet = "abcdefghijklmnopqrstuvwxyz";
   if (upperCase) {
     alphabet = alphabet.toUpperCase();
   }
-  return alphabet[import_lodash.random(alphabet.length - 1)];
+  return alphabet[random2(alphabet.length - 1)];
 };
 var addWordToGrid = (word, path, grid) => {
   const updatedGrid = import_lodash.cloneDeep(grid);
@@ -5999,21 +6658,21 @@ var createGrid = (cols, rows) => {
   }
   return grid;
 };
-var fillGrid = (grid, upperCase) => {
-  return grid.map((row) => row.map((cell) => cell === "." ? getRandomLetter(upperCase) : cell));
+var fillGrid = (grid, upperCase, seeder = seededRandom()) => {
+  return grid.map((row) => row.map((cell) => cell === "." ? getRandomLetter(upperCase, seeder) : cell));
 };
-var findPathInGrid = (word, grid, allowedDirections, backwardsProbability) => {
+var findPathInGrid = (word, grid, allowedDirections, backwardsProbability, seeder = seededRandom()) => {
   let foundPath = false;
   let path;
   const tryBackwardsFirst = Math.random() < backwardsProbability;
-  const directionsToTry = shuffleDirections(allowedDirections, tryBackwardsFirst);
+  const directionsToTry = shuffleDirections(allowedDirections, tryBackwardsFirst, seeder);
   while (directionsToTry.length && !foundPath) {
     const direction = directionsToTry.shift();
     const boundaries = getWordStartBoundaries(word.length, direction, grid[0].length, grid.length);
     if (boundaries !== null) {
       const xToTry = import_lodash.range(boundaries.minX, boundaries.maxX + 1);
       const yToTry = import_lodash.range(boundaries.minY, boundaries.maxY + 1);
-      const positionsToTry = import_lodash.shuffle(import_lodash.flatten(xToTry.map((x) => yToTry.map((y) => ({ x, y })))));
+      const positionsToTry = seededShuffle(import_lodash.flatten(xToTry.map((x) => yToTry.map((y) => ({ x, y })))), seeder);
       while (positionsToTry.length && !foundPath) {
         const { x, y } = positionsToTry.shift();
         let invalidSpot = false;
@@ -6082,14 +6741,14 @@ class WordSearch {
   buildGame(retries = 0) {
     let grid = createGrid(this.settings.cols, this.settings.rows);
     const addedWords = [];
-    const dict = import_lodash2.shuffle(this.settings.dictionary);
+    const dict = seededShuffle(this.settings.dictionary, this.settings.seed);
     dict.forEach((word) => {
       const clean = this.cleanWord(word);
       if (this.cleanForbiddenWords.some((fw) => clean.includes(fw))) {
         return;
       }
       if (addedWords.length < this.settings.maxWords) {
-        const path = findPathInGrid(clean, grid, this.settings.allowedDirections, this.settings.backwardsProbability);
+        const path = findPathInGrid(clean, grid, this.settings.allowedDirections, this.settings.backwardsProbability, this.settings.seed);
         if (path !== false) {
           grid = addWordToGrid(clean, path, grid);
           addedWords.push({ word, clean, path });
@@ -6097,7 +6756,7 @@ class WordSearch {
       }
     });
     addedWords.sort((a, b) => a.clean > b.clean ? 1 : -1);
-    grid = fillGrid(grid, this.settings.upperCase);
+    grid = fillGrid(grid, this.settings.upperCase, this.settings.seed);
     if (this.cleanForbiddenWords.length) {
       const forbiddenWordsFound = filterWordsInGrid(this.cleanForbiddenWords, grid);
       if (forbiddenWordsFound.length) {

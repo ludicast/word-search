@@ -1,13 +1,16 @@
-import { merge, difference, cloneDeep, shuffle } from "lodash";
+import { merge, difference, cloneDeep } from "lodash";
 import * as utils from "./utils";
 import { defaultSettings } from "./defaultsettings";
+import { seededShuffle, type Seeder } from "./random";
+
+type SettingType = typeof defaultSettings & { seed?: Seeder };
 
 export class WordSearch {
-    settings: typeof defaultSettings
+    settings: SettingType
     data: { grid: string[][], words: Array<{ word: string, clean: string, path: any }> }
     forbiddenWordsFound: any[]
-
-	constructor(options = {}) {
+	
+	constructor(options: Partial<SettingType> = {}) {
 		this.settings = merge(cloneDeep(defaultSettings), cloneDeep(options));
 		this.settings.allowedDirections = difference(
 			this.settings.allowedDirections,
@@ -37,7 +40,7 @@ export class WordSearch {
 	buildGame(retries = 0): { grid: string[][], words: Array<{ word: string, clean: string, path: any }> } {
 		let grid = utils.createGrid(this.settings.cols, this.settings.rows);
 		const addedWords: Array<{ word: string, clean: string, path: any }> = [];
-		const dict = shuffle(this.settings.dictionary);
+		const dict = seededShuffle(this.settings.dictionary, this.settings.seed);
 		dict.forEach(word => {
 			const clean = this.cleanWord(word);
 			if (this.cleanForbiddenWords.some(fw => clean.includes(fw))) {
@@ -48,7 +51,8 @@ export class WordSearch {
 					clean,
 					grid,
 					this.settings.allowedDirections,
-					this.settings.backwardsProbability
+					this.settings.backwardsProbability,
+					this.settings.seed
 				);
 				if (path !== false) {
 					grid = utils.addWordToGrid(clean, path, grid);
@@ -57,7 +61,7 @@ export class WordSearch {
 			}
 		});
 		addedWords.sort((a, b) => (a.clean > b.clean ? 1 : -1));
-		grid = utils.fillGrid(grid, this.settings.upperCase);
+		grid = utils.fillGrid(grid, this.settings.upperCase, this.settings.seed);
 
 		if (this.cleanForbiddenWords.length) {
 			const forbiddenWordsFound = utils.filterWordsInGrid(this.cleanForbiddenWords, grid);

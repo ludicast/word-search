@@ -1,7 +1,11 @@
 import * as utils from "./utils";
 import { defaultSettings } from "./defaultsettings";
+import { type Seeder } from "./random";
+type SettingType = typeof defaultSettings & {
+    seed?: Seeder;
+};
 export declare class WordSearch {
-    settings: typeof defaultSettings;
+    settings: SettingType;
     data: {
         grid: string[][];
         words: Array<{
@@ -11,7 +15,7 @@ export declare class WordSearch {
         }>;
     };
     forbiddenWordsFound: any[];
-    constructor(options?: {});
+    constructor(options?: Partial<SettingType>);
     get grid(): string[][];
     get words(): {
         word: string;
@@ -44,19 +48,7 @@ export declare class WordSearch {
     };
     cleanWord(word: string): string;
     dump(): {
-        settings: {
-            cols: number;
-            rows: number;
-            disabledDirections: any[];
-            allowedDirections: string[];
-            dictionary: string[];
-            maxWords: number;
-            backwardsProbability: number;
-            upperCase: boolean;
-            diacritics: boolean;
-            forbiddenWords: string[];
-            maxRetries: number;
-        };
+        settings: SettingType;
         data: {
             grid: string[][];
             words: Array<{
@@ -70,3 +62,4 @@ export declare class WordSearch {
     read(start: utils.Position, end: utils.Position): string;
     toString(): string;
 }
+export {};
