@@ -4,6 +4,7 @@ exports.WordSearch = void 0;
 var lodash_1 = require("lodash");
 var utils = require("./utils");
 var defaultsettings_1 = require("./defaultsettings");
+var random_1 = require("./random");
 var WordSearch = /** @class */ (function () {
     function WordSearch(options) {
         if (options === void 0) { options = {}; }
@@ -60,14 +61,14 @@ var WordSearch = /** @class */ (function () {
         if (retries === void 0) { retries = 0; }
         var grid = utils.createGrid(this.settings.cols, this.settings.rows);
         var addedWords = [];
-        var dict = (0, lodash_1.shuffle)(this.settings.dictionary);
+        var dict = (0, random_1.seededShuffle)(this.settings.dictionary, this.settings.seed);
         dict.forEach(function (word) {
             var clean = _this.cleanWord(word);
             if (_this.cleanForbiddenWords.some(function (fw) { return clean.includes(fw); })) {
                 return;
             }
             if (addedWords.length < _this.settings.maxWords) {
-                var path = utils.findPathInGrid(clean, grid, _this.settings.allowedDirections, _this.settings.backwardsProbability);
+                var path = utils.findPathInGrid(clean, grid, _this.settings.allowedDirections, _this.settings.backwardsProbability, _this.settings.seed);
                 if (path !== false) {
                     grid = utils.addWordToGrid(clean, path, grid);
                     addedWords.push({ word: word, clean: clean, path: path });
@@ -75,7 +76,7 @@ var WordSearch = /** @class */ (function () {
             }
         });
         addedWords.sort(function (a, b) { return (a.clean > b.clean ? 1 : -1); });
-        grid = utils.fillGrid(grid, this.settings.upperCase);
+        grid = utils.fillGrid(grid, this.settings.upperCase, this.settings.seed);
         if (this.cleanForbiddenWords.length) {
             var forbiddenWordsFound = utils.filterWordsInGrid(this.cleanForbiddenWords, grid);
             if (forbiddenWordsFound.length) {

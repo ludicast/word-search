@@ -1,4 +1,5 @@
 import { WordSearch } from "../src";
+import { seededRandom } from "../src/random";
 import { getAllCharSequencesFromGrid } from "../src/utils";
 
 describe("WordSearch", () => {
@@ -67,7 +68,24 @@ describe("WordSearch", () => {
 		}
 	};
 
+	describe("WithSeed ", () => {
+		const first = new WordSearch({ seed: seededRandom("123") });
+		it("generates a unique grid for different seeds", () => {
+			const second = new WordSearch();
+			expect(first.toString()).not.toEqual(second.toString());
+		})
+		it("generates an identical grid for in identical seeds", () => {
+			const second = new WordSearch({ seed: seededRandom("123") });
+			expect(first.toString()).toEqual(second.toString());
+		})
+		it("generates a different grid for in identical seeds", () => {
+			const second = new WordSearch({ seed: seededRandom("456") });
+			expect(first.toString()).not.toEqual(second.toString());
+		})
+	})
+
 	it("creates an instance with default settings", () => {
+		console.log(ws1.toString())
 		expect(ws1.settings).toEqual(ws1.defaultSettings);
 	});
 

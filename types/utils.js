@@ -5,6 +5,7 @@ exports.filterWordsInGrid = filterWordsInGrid;
 exports.getAllCharSequencesFromGrid = getAllCharSequencesFromGrid;
 var lodash_1 = require("lodash");
 var diacritics_1 = require("diacritics");
+var random_1 = require("./random");
 /**
  * Returns an array of positions, following a direction
  * from a starting point.
@@ -154,12 +155,13 @@ exports.normalizeWord = normalizeWord;
  * @param {boolean} upperCase - Whether to return an uppercase letter
  * @returns {string} - A random letter
  */
-var getRandomLetter = function (upperCase) {
+var getRandomLetter = function (upperCase, random) {
+    if (random === void 0) { random = (0, random_1.seededRandom)(); }
     var alphabet = "abcdefghijklmnopqrstuvwxyz";
     if (upperCase) {
         alphabet = alphabet.toUpperCase();
     }
-    return alphabet[(0, lodash_1.random)(alphabet.length - 1)];
+    return alphabet[random(alphabet.length - 1)];
 };
 exports.getRandomLetter = getRandomLetter;
 /**
@@ -206,15 +208,17 @@ exports.createGrid = createGrid;
  * @param {boolean} upperCase - Whether to fill the grid with uppercase letters
  * @returns {Array} - A new grid
  */
-var fillGrid = function (grid, upperCase) {
+var fillGrid = function (grid, upperCase, seeder) {
+    if (seeder === void 0) { seeder = (0, random_1.seededRandom)(); }
     return grid.map(function (row) {
-        return row.map(function (cell) { return (cell === "." ? (0, exports.getRandomLetter)(upperCase) : cell); });
+        return row.map(function (cell) { return (cell === "." ? (0, exports.getRandomLetter)(upperCase, seeder) : cell); });
     });
 };
 exports.fillGrid = fillGrid;
-function shuffleDirections(allowedDirections, tryBackardsFirst) {
-    var backwardsDirections = (0, lodash_1.shuffle)(["N", "W", "NW", "SW"]);
-    var forwardDirections = (0, lodash_1.shuffle)(["S", "E", "NE", "SE"]);
+function shuffleDirections(allowedDirections, tryBackardsFirst, seeder) {
+    if (seeder === void 0) { seeder = (0, random_1.seededRandom)(); }
+    var backwardsDirections = (0, random_1.seededShuffle)(["N", "W", "NW", "SW"], seeder);
+    var forwardDirections = (0, random_1.seededShuffle)(["S", "E", "NE", "SE"], seeder);
     var allDirections = tryBackardsFirst
         ? backwardsDirections.concat(forwardDirections)
         : forwardDirections.concat(backwardsDirections);
@@ -231,12 +235,13 @@ function shuffleDirections(allowedDirections, tryBackardsFirst) {
  * @param {number} backwardsProbability - Probability to have each word written backwards
  * @returns {(Array<Position>|false)} - Array of positions
  */
-var findPathInGrid = function (word, grid, allowedDirections, backwardsProbability) {
+var findPathInGrid = function (word, grid, allowedDirections, backwardsProbability, seeder) {
+    if (seeder === void 0) { seeder = (0, random_1.seededRandom)(); }
     var foundPath = false;
     var path;
     var tryBackwardsFirst = Math.random() < backwardsProbability;
     // We'll try all possible directions in random order until we find a spot
-    var directionsToTry = shuffleDirections(allowedDirections, tryBackwardsFirst);
+    var directionsToTry = shuffleDirections(allowedDirections, tryBackwardsFirst, seeder);
     var _loop_1 = function () {
         var direction = directionsToTry.shift();
         // Get the boundaries of where the word can start
@@ -245,7 +250,7 @@ var findPathInGrid = function (word, grid, allowedDirections, backwardsProbabili
             var xToTry = (0, lodash_1.range)(boundaries.minX, boundaries.maxX + 1);
             var yToTry_1 = (0, lodash_1.range)(boundaries.minY, boundaries.maxY + 1);
             // We'll try all possible positions in random order until we find a spot
-            var positionsToTry = (0, lodash_1.shuffle)((0, lodash_1.flatten)(xToTry.map(function (x) { return yToTry_1.map(function (y) { return ({ x: x, y: y }); }); })));
+            var positionsToTry = (0, random_1.seededShuffle)((0, lodash_1.flatten)(xToTry.map(function (x) { return yToTry_1.map(function (y) { return ({ x: x, y: y }); }); })), seeder);
             while (positionsToTry.length && !foundPath) {
                 var _a = positionsToTry.shift(), x = _a.x, y = _a.y;
                 var invalidSpot = false;

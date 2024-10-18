@@ -1,3 +1,4 @@
+import { type Seeder } from "./random";
 export type Position = {
     x: number;
     y: number;
@@ -60,7 +61,7 @@ export declare const normalizeWord: (word: string, upperCase?: boolean, keepDiac
  * @param {boolean} upperCase - Whether to return an uppercase letter
  * @returns {string} - A random letter
  */
-export declare const getRandomLetter: (upperCase: boolean) => string;
+export declare const getRandomLetter: (upperCase: boolean, random?: Seeder) => string;
 /**
  * Returns a new grid with a word added in the given path.
  * @kind function
@@ -89,7 +90,7 @@ export declare const createGrid: (cols: number, rows: number) => string[][];
  * @param {boolean} upperCase - Whether to fill the grid with uppercase letters
  * @returns {Array} - A new grid
  */
-export declare const fillGrid: (grid: string[][], upperCase: boolean) => string[][];
+export declare const fillGrid: (grid: string[][], upperCase: boolean, seeder?: Seeder) => string[][];
 /**
  * Returns a random path for a word in a grid if it can find one,
  * null otherwise.
@@ -101,7 +102,7 @@ export declare const fillGrid: (grid: string[][], upperCase: boolean) => string[
  * @param {number} backwardsProbability - Probability to have each word written backwards
  * @returns {(Array<Position>|false)} - Array of positions
  */
-export declare const findPathInGrid: (word: string, grid: string[][], allowedDirections: string[], backwardsProbability: number) => false | Position[];
+export declare const findPathInGrid: (word: string, grid: string[][], allowedDirections: string[], backwardsProbability: number, seeder?: Seeder) => false | Position[];
 /**
  * Filters an Array of words to only keep
  * those found in a grid, in all directions.
