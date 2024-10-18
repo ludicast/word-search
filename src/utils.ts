@@ -1,6 +1,6 @@
 import { inRange, range, fill, flatten, cloneDeep } from "lodash";
 import diacritics from "diacritics";
-import { seededShuffle, seededRandom, type Seeder } from "./random";
+import { seededShuffle, seederRandom, type Seeder } from "./random";
 
 export type Position = {
 	x: number;
@@ -155,7 +155,7 @@ export const normalizeWord = (word: string, upperCase = true, keepDiacritics = f
  * @param {boolean} upperCase - Whether to return an uppercase letter
  * @returns {string} - A random letter
  */
-export const getRandomLetter = (upperCase: boolean, random: Seeder = seededRandom()): string => {
+export const getRandomLetter = (upperCase: boolean, random: Seeder = seederRandom()): string => {
 	let alphabet = "abcdefghijklmnopqrstuvwxyz";
 	if (upperCase) {
 		alphabet = alphabet.toUpperCase();
@@ -207,13 +207,13 @@ export const createGrid = (cols: number, rows: number): string[][] => {
  * @param {boolean} upperCase - Whether to fill the grid with uppercase letters
  * @returns {Array} - A new grid
  */
-export const fillGrid = (grid: string[][], upperCase: boolean, seeder: Seeder = seededRandom()): string[][] => {
+export const fillGrid = (grid: string[][], upperCase: boolean, seeder: Seeder = seederRandom()): string[][] => {
 	return grid.map(row =>
 		row.map(cell => (cell === "." ? getRandomLetter(upperCase, seeder) : cell))
 	);
 };
 
-function shuffleDirections(allowedDirections: string[], tryBackardsFirst: boolean, seeder: Seeder = seededRandom()): string[] {
+function shuffleDirections(allowedDirections: string[], tryBackardsFirst: boolean, seeder: Seeder = seederRandom()): string[] {
 	const backwardsDirections = seededShuffle(["N", "W", "NW", "SW"], seeder);
 	const forwardDirections = seededShuffle(["S", "E", "NE", "SE"], seeder);
 	const allDirections = tryBackardsFirst
@@ -238,7 +238,7 @@ export const findPathInGrid = (
 	grid: string[][],
 	allowedDirections: string[],
 	backwardsProbability: number,
-	seeder: Seeder = seededRandom()
+	seeder: Seeder = seederRandom()
 ) => {
 	let foundPath: Position[] | false = false;
 	let path;

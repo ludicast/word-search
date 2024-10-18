@@ -156,7 +156,7 @@ exports.normalizeWord = normalizeWord;
  * @returns {string} - A random letter
  */
 var getRandomLetter = function (upperCase, random) {
-    if (random === void 0) { random = (0, random_1.seededRandom)(); }
+    if (random === void 0) { random = (0, random_1.seederRandom)(); }
     var alphabet = "abcdefghijklmnopqrstuvwxyz";
     if (upperCase) {
         alphabet = alphabet.toUpperCase();
@@ -209,14 +209,14 @@ exports.createGrid = createGrid;
  * @returns {Array} - A new grid
  */
 var fillGrid = function (grid, upperCase, seeder) {
-    if (seeder === void 0) { seeder = (0, random_1.seededRandom)(); }
+    if (seeder === void 0) { seeder = (0, random_1.seederRandom)(); }
     return grid.map(function (row) {
         return row.map(function (cell) { return (cell === "." ? (0, exports.getRandomLetter)(upperCase, seeder) : cell); });
     });
 };
 exports.fillGrid = fillGrid;
 function shuffleDirections(allowedDirections, tryBackardsFirst, seeder) {
-    if (seeder === void 0) { seeder = (0, random_1.seededRandom)(); }
+    if (seeder === void 0) { seeder = (0, random_1.seederRandom)(); }
     var backwardsDirections = (0, random_1.seededShuffle)(["N", "W", "NW", "SW"], seeder);
     var forwardDirections = (0, random_1.seededShuffle)(["S", "E", "NE", "SE"], seeder);
     var allDirections = tryBackardsFirst
@@ -236,7 +236,7 @@ function shuffleDirections(allowedDirections, tryBackardsFirst, seeder) {
  * @returns {(Array<Position>|false)} - Array of positions
  */
 var findPathInGrid = function (word, grid, allowedDirections, backwardsProbability, seeder) {
-    if (seeder === void 0) { seeder = (0, random_1.seededRandom)(); }
+    if (seeder === void 0) { seeder = (0, random_1.seederRandom)(); }
     var foundPath = false;
     var path;
     var tryBackwardsFirst = Math.random() < backwardsProbability;

@@ -6509,7 +6509,7 @@ var import_diacritics = __toESM(require_diacritics(), 1);
 
 // src/random.ts
 var import_seedrandom = __toESM(require_seedrandom2(), 1);
-function seededRandom(seed) {
+function seederRandom(seed) {
   const genRandom = import_seedrandom.default(seed);
   return (max) => {
     if (max) {
@@ -6519,7 +6519,7 @@ function seededRandom(seed) {
     return genRandom();
   };
 }
-function seededShuffle(array, random2 = seededRandom()) {
+function seededShuffle(array, random2 = seederRandom()) {
   const result = array.slice();
   for (let i = result.length - 1;i > 0; i--) {
     const j = Math.floor(random2() * (i + 1));
@@ -6529,7 +6529,7 @@ function seededShuffle(array, random2 = seededRandom()) {
 }
 
 // src/utils.ts
-function shuffleDirections(allowedDirections, tryBackardsFirst, seeder = seededRandom()) {
+function shuffleDirections(allowedDirections, tryBackardsFirst, seeder = seederRandom()) {
   const backwardsDirections = seededShuffle(["N", "W", "NW", "SW"], seeder);
   const forwardDirections = seededShuffle(["S", "E", "NE", "SE"], seeder);
   const allDirections = tryBackardsFirst ? backwardsDirections.concat(forwardDirections) : forwardDirections.concat(backwardsDirections);
@@ -6635,7 +6635,7 @@ var normalizeWord = (word, upperCase = true, keepDiacritics = false) => {
   let res = keepDiacritics ? word : import_diacritics.default.remove(word);
   return res[upperCase ? "toUpperCase" : "toLowerCase"]();
 };
-var getRandomLetter = (upperCase, random2 = seededRandom()) => {
+var getRandomLetter = (upperCase, random2 = seederRandom()) => {
   let alphabet = "abcdefghijklmnopqrstuvwxyz";
   if (upperCase) {
     alphabet = alphabet.toUpperCase();
@@ -6658,10 +6658,10 @@ var createGrid = (cols, rows) => {
   }
   return grid;
 };
-var fillGrid = (grid, upperCase, seeder = seededRandom()) => {
+var fillGrid = (grid, upperCase, seeder = seederRandom()) => {
   return grid.map((row) => row.map((cell) => cell === "." ? getRandomLetter(upperCase, seeder) : cell));
 };
-var findPathInGrid = (word, grid, allowedDirections, backwardsProbability, seeder = seededRandom()) => {
+var findPathInGrid = (word, grid, allowedDirections, backwardsProbability, seeder = seederRandom()) => {
   let foundPath = false;
   let path;
   const tryBackwardsFirst = Math.random() < backwardsProbability;
@@ -6791,5 +6791,7 @@ class WordSearch {
   }
 }
 export {
+  seederRandom,
+  seededShuffle,
   WordSearch
 };

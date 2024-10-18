@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.seededRandom = seededRandom;
+exports.seederRandom = seederRandom;
 exports.seededShuffle = seededShuffle;
 var seedrandom_1 = require("seedrandom");
-function seededRandom(seed) {
+function seederRandom(seed) {
     var genRandom = (0, seedrandom_1.default)(seed);
     return function (max) {
         if (max) {
@@ -15,7 +15,7 @@ function seededRandom(seed) {
 }
 function seededShuffle(array, random) {
     var _a;
-    if (random === void 0) { random = seededRandom(); }
+    if (random === void 0) { random = seederRandom(); }
     var result = array.slice();
     // Fisher-Yates
     for (var i = result.length - 1; i > 0; i--) {

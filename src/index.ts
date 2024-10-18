@@ -1,7 +1,7 @@
 import { merge, difference, cloneDeep } from "lodash";
 import * as utils from "./utils";
 import { defaultSettings } from "./defaultsettings";
-import { seededShuffle, type Seeder } from "./random";
+import { seededShuffle, seederRandom, type Seeder } from "./random";
 
 type SettingType = typeof defaultSettings & { seed?: Seeder };
 
@@ -104,3 +104,5 @@ export class WordSearch {
 		return this.data.grid.map(l => l.join(" ")).join("\n");
 	}
 }
+
+export * from "./random"

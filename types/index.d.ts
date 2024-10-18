@@ -62,4 +62,4 @@ export declare class WordSearch {
     read(start: utils.Position, end: utils.Position): string;
     toString(): string;
 }
-export {};
+export * from "./random";

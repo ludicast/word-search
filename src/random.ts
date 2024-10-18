@@ -2,7 +2,7 @@ import random from "seedrandom"
 
 export type Seeder = (max?: number) => number
 
-export function seededRandom(seed?: string): Seeder {
+export function seederRandom(seed?: string): Seeder {
     const genRandom = random(seed)
     return (max?: number) => {
         if (max) {
@@ -13,7 +13,7 @@ export function seededRandom(seed?: string): Seeder {
     }
   }
   
-export function seededShuffle<T>(array: T[], random: Seeder = seededRandom()): T[] {
+export function seededShuffle<T>(array: T[], random: Seeder = seederRandom()): T[] {
 	const result = array.slice();
   
 	// Fisher-Yates
