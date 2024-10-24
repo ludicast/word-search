@@ -1,4 +1,5 @@
 import { findPathInGrid } from "../src/utils";
+import { seederRandom } from "../src/random";
 
 const testCases = [
   {
@@ -58,7 +59,8 @@ describe("utils.findPathInGrid", () => {
         t.word,
         t.grid,
         t.allowedDirections,
-        t.backwardsProbability
+        t.backwardsProbability,
+        seederRandom()
       ) as any;
       if (t.possible) {
         expect(res.length).toEqual(t.word.length);

@@ -1,9 +1,8 @@
 import { WordSearch } from "../src";
-import { seederRandom } from "../src/random";
 import { getAllCharSequencesFromGrid } from "../src/utils";
 
 describe("WordSearch", () => {
-	const ws1 = new WordSearch();
+	const ws1 = new WordSearch({ seedValue: `${Math.random()}` });
 	const ws2 = new WordSearch({
 		cols: 10,
 		rows: 10,
@@ -12,7 +11,8 @@ describe("WordSearch", () => {
 		dictionary: ["Hello", "world", "and", "welcome"],
 		maxWords: 20,
 		upperCase: true,
-		diacritics: false
+		diacritics: false,
+		seedValue: `${Math.random()}`
 	});
 	const options5: any = {
 		settings: {
@@ -69,37 +69,39 @@ describe("WordSearch", () => {
 	};
 
 	describe("WithSeed ", () => {
-		const first = new WordSearch({ seed: seederRandom("123") });
+		const first = new WordSearch({ seedValue: "123" });
 		it("generates a unique grid for different seeds", () => {
-			const second = new WordSearch();
+			const second = new WordSearch({ seedValue: `${Math.random()}` });
 			expect(first.toString()).not.toEqual(second.toString());
 		})
 		it("generates an identical grid for in identical seeds", () => {
-			const second = new WordSearch({ seed: seederRandom("123") });
+			const second = new WordSearch({ seedValue: "123" });
 			expect(first.toString()).toEqual(second.toString());
 		})
 		it("generates a different grid for in identical seeds", () => {
-			const second = new WordSearch({ seed: seederRandom("456") });
+			const second = new WordSearch({ seedValue: "456" });
 			expect(first.toString()).not.toEqual(second.toString());
 		})
 	})
 
 	it("creates an instance with default settings", () => {
-		console.log(ws1.toString())
-		expect(ws1.settings).toEqual(ws1.defaultSettings);
+		const {seedValue, ...settings} = ws1.settings
+		expect(settings).toEqual(ws1.defaultSettings);
 	});
 
 	it("does not exceed maxWords in grid", () => {
 		const ws3 = new WordSearch({
 			dictionary: ["Hello", "world"],
-			maxWords: 1
+			maxWords: 1,
+			seedValue: `${Math.random()}`
 		});
 		expect(ws3.words).toHaveLength(1);
 	});
 
 	it("does not try to insert words that are too long", () => {
 		const ws4 = new WordSearch({
-			dictionary: ["Hello", "AVeryLongName"]
+			dictionary: ["Hello", "AVeryLongName"],
+			seedValue: `${Math.random()}`
 		});
 		expect(ws4.words).toHaveLength(1);
 	});
@@ -107,7 +109,8 @@ describe("WordSearch", () => {
 	it("does not contain forbidden words even if one is in the dictionary", () => {
 		const ws5 = new WordSearch({
 			dictionary: ["hey", "crap"],
-			forbiddenWords: ["Crap"]
+			forbiddenWords: ["Crap"],
+			seedValue: `${Math.random()}`
 		});
 		expect(ws5.forbiddenWordsIncluded).toEqual([]);
 	});
@@ -118,7 +121,8 @@ describe("WordSearch", () => {
 			rows: 5,
 			dictionary: ["xox", "yoy"],
 			forbiddenWords: ["oo"],
-			maxRetries: 10
+			maxRetries: 10,
+			seedValue: `${Math.random()}`
 		});
 		const sequences = getAllCharSequencesFromGrid(ws6.grid);
 		const doesNotContainOO = !sequences.includes("OO");
@@ -130,7 +134,8 @@ describe("WordSearch", () => {
 			cols: 2,
 			rows: 3,
 			dictionary: ["xox", "yoy"],
-			forbiddenWords: ["oo"]
+			forbiddenWords: ["oo"],
+			seedValue: `${Math.random()}`
 		});
 		const sequences = getAllCharSequencesFromGrid(ws7.grid);
 		const containsOO = sequences.includes("OO");
@@ -142,7 +147,8 @@ describe("WordSearch", () => {
 			cols: 2,
 			rows: 3,
 			dictionary: ["xox", "yoy"],
-			forbiddenWords: ["oo"]
+			forbiddenWords: ["oo"],
+			seedValue: `${Math.random()}`
 		});
 		expect(ws8.forbiddenWordsIncluded).toEqual(["OO"]);
 	});
@@ -171,14 +177,15 @@ describe("WordSearch", () => {
 	});
 
 	it("ws.load() correctly applies the given properties", () => {
-		const ws5 = new WordSearch();
+		const ws5 = new WordSearch({ seedValue: `${Math.random()}` });
 		ws5.load(options5);
 		expect(ws5.grid).toEqual(options5.data.grid);
-		expect(ws5.settings).toEqual(options5.settings);
+		const {seedValue, ...settings} = ws5.settings
+		expect(settings).toEqual(options5.settings);
 	});
 
 	it("ws.read() returns the correct string", () => {
-		const ws5 = new WordSearch();
+		const ws5 = new WordSearch({ seedValue: `${Math.random()}` });
 		ws5.load(options5);
 		expect(ws5.read({ x: 7, y: 6 }, { x: 3, y: 6 })).toEqual("HELLO");
 		expect(ws5.read({ x: 7, y: 6 }, { x: 3, y: 9 })).toEqual(null);
@@ -187,4 +194,13 @@ describe("WordSearch", () => {
 	it("ws.toString() returns the grid as a string", () => {
 		expect(typeof ws1.toString()).toBe("string");
 	});
+
+	describe("with seeded random", () => {
+		it("generates a identical giant grids for identical seeds", () => {
+			const gen = () => new WordSearch({ cols: 6, rows: 6, seedValue: "123", dictionary: ["Hello", "world"]});
+			const ws1 = gen()
+			const ws2 = gen()
+			expect(ws1.toString()).toEqual(ws2.toString());
+		})
+	})
 });

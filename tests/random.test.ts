@@ -31,13 +31,13 @@ describe("random.seededRandom", () => {
 describe("random.seededShuffle", () => {
   it("shuffles", () => {
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    const shuffled = seededShuffle(arr)
+    const shuffled = seededShuffle(arr, seederRandom())
     expect(shuffled).not.toEqual(arr)
   });
   it("shuffles differently by default", () => {
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    const shuffled1 = seededShuffle(arr)
-    const shuffled2 = seededShuffle(arr)
+    const shuffled1 = seededShuffle(arr, seederRandom())
+    const shuffled2 = seededShuffle(arr, seederRandom())
     expect(shuffled1).not.toEqual(shuffled2)
   });
   it("shuffles differently with a different seed", () => {
