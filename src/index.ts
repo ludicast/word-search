@@ -4,7 +4,7 @@ import * as utils from "./utils"
 import { defaultSettings } from "./defaultsettings"
 import { seededShuffle, type Seeder, seederRandom } from "./random"
 
-type SettingType = typeof defaultSettings & { seedValue?: string }
+type SettingType = typeof defaultSettings & { seed?: string }
 
 export class WordSearch {
   settings: SettingType
@@ -14,12 +14,7 @@ export class WordSearch {
 
   constructor(options: Partial<SettingType> = {}) {
     this.settings = merge(cloneDeep(defaultSettings), cloneDeep(options))
-    if (options.seedValue) {
-      this.seeder = seederRandom(options.seedValue!)
-    } else {
-      this.seeder = seederRandom()
-      throw new Error("seedValue is required")
-    }
+    this.seeder = seederRandom(options.seed)
     this.settings.allowedDirections = difference(
       this.settings.allowedDirections,
       this.settings.disabledDirections
